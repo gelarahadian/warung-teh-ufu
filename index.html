@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warung Teh Ufu — Cicurug, Sukabumi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --green-dark: #1a3a0a;
+    --green-mid:  #2d5a1b;
+    --green-light:#4a8a2e;
+    --green-pale: #e8f3e0;
+    --green-wash: #f4f9f0;
+    --cream:      #faf8f2;
+    --warm-white: #fffdf8;
+    --text-dark:  #1a1a14;
+    --text-mid:   #4a4a3c;
+    --text-soft:  #8a8a78;
+    --gold:       #c8922a;
+    --gold-light: #f0c96e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ========== NAV ========== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    transition: all 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(250,248,242,0.96);
+    backdrop-filter: blur(12px);
+    padding: 14px 60px;
+    border-bottom: 1px solid rgba(45,90,27,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--warm-white);
+    letter-spacing: -0.3px;
+    transition: color 0.4s;
+  }
+  nav.scrolled .nav-logo { color: var(--green-dark); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a { color: var(--text-mid); }
+  .nav-links a:hover { color: var(--gold-light); }
+  nav.scrolled .nav-links a:hover { color: var(--green-mid); }
+  .nav-cta {
+    padding: 9px 22px; border-radius: 50px;
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    color: white; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+  }
+  nav.scrolled .nav-cta {
+    border-color: var(--green-mid);
+    color: var(--green-mid);
+    background: transparent;
+  }
+  .nav-cta:hover { background: var(--green-mid); border-color: var(--green-mid); color: white !important; }
+
+  /* ========== HERO ========== */
+  .hero {
+    min-height: 100vh;
+    background: var(--green-dark);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(74,138,46,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 20% 80%, rgba(45,90,27,0.4) 0%, transparent 60%);
+  }
+  .hero-leaves {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle 2px at 15% 20%, rgba(200,230,160,0.35) 0%, transparent 100%),
+      radial-gradient(circle 1px at 85% 35%, rgba(200,230,160,0.25) 0%, transparent 100%),
+      radial-gradient(circle 3px at 60% 75%, rgba(200,230,160,0.2) 0%, transparent 100%),
+      radial-gradient(circle 1px at 40% 50%, rgba(200,230,160,0.2) 0%, transparent 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto;
+    padding: 120px 60px 80px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,146,42,0.2);
+    border: 1px solid rgba(200,146,42,0.4);
+    border-radius: 50px; padding: 6px 16px;
+    margin-bottom: 24px;
+    font-size: 12px; font-weight: 500;
+    color: var(--gold-light);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .hero-badge::before { content: '★'; font-size: 11px; }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: white;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-subtitle {
+    font-size: clamp(14px, 2vw, 17px);
+    line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    margin: 20px 0 36px;
+    max-width: 440px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 30px; border-radius: 50px;
+    background: var(--gold);
+    border: none; color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s;
+    text-decoration: none; display: inline-block;
+    letter-spacing: 0.3px;
+  }
+  .btn-primary:hover { background: #e0a830; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,146,42,0.35); }
+  .btn-ghost {
+    padding: 14px 30px; border-radius: 50px;
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: white; font-family: 'Outfit', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.3s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; margin-top: 52px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px; overflow: hidden;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.06);
+    padding: 20px 16px; text-align: center;
+    transition: background 0.3s;
+  }
+  .hero-stat:hover { background: rgba(255,255,255,0.1); }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 12px; color: rgba(255,255,255,0.55);
+    margin-top: 5px; letter-spacing: 0.3px;
+  }
+
+  /* Hero right visual */
+  .hero-visual {
+    position: relative; display: flex;
+    justify-content: center; align-items: center;
+  }
+  .hero-card-main {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px;
+    padding: 32px;
+    backdrop-filter: blur(8px);
+    width: 100%; max-width: 360px;
+  }
+  .rating-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px; font-weight: 900;
+    color: white; line-height: 1;
+  }
+  .stars-row { display: flex; gap: 5px; margin: 8px 0 4px; }
+  .star { font-size: 20px; color: var(--gold-light); }
+  .rating-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+  .review-pills { display: flex; flex-direction: column; gap: 10px; }
+  .review-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 12px 16px;
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    font-style: italic; line-height: 1.5;
+    position: relative;
+  }
+  .review-pill::before { content: '"'; font-size: 28px; color: var(--gold); line-height: 0; vertical-align: -10px; margin-right: 4px; }
+  .open-badge {
+    position: absolute; top: -12px; right: 20px;
+    background: #22c55e; color: white;
+    font-size: 11px; font-weight: 600;
+    padding: 3px 12px; border-radius: 50px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ========== SECTION COMMON ========== */
+  section { padding: 100px 60px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600;
+    color: var(--green-mid);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .section-tag::before { content: '— '; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700; line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: var(--text-dark);
+  }
+  .section-title em { font-style: italic; color: var(--green-mid); }
+
+  /* ========== ABOUT ========== */
+  .about { background: var(--warm-white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .about-text .section-title { margin-bottom: 24px; }
+  .about-desc {
+    font-size: 16px; line-height: 1.85;
+    color: var(--text-mid); margin-bottom: 28px;
+  }
+  .about-features { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .about-feature {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 18px;
+    background: var(--green-wash);
+    border-radius: 12px;
+    border-left: 3px solid var(--green-mid);
+    transition: transform 0.2s;
+  }
+  .about-feature:hover { transform: translateX(4px); }
+  .about-feature-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+  .about-feature-title { font-weight: 600; font-size: 15px; margin-bottom: 3px; }
+  .about-feature-desc { font-size: 13px; color: var(--text-soft); line-height: 1.6; }
+
+  /* About visual card */
+  .about-visual { position: relative; }
+  .about-card-big {
+    background: var(--green-dark);
+    border-radius: 24px; padding: 40px;
+    color: white; position: relative; overflow: hidden;
+  }
+  .about-card-bg {
+    position: absolute; bottom: -30px; right: -30px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(74,138,46,0.3);
+  }
+  .about-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700;
+    line-height: 1.3; margin-bottom: 16px;
+  }
+  .about-card-body { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.65); }
+  .about-card-divider { width: 40px; height: 2px; background: var(--gold); margin: 20px 0; }
+  .about-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+  .about-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px; padding: 6px 14px;
+    font-size: 12px; color: rgba(255,255,255,0.75);
+  }
+
+  /* ========== MENU ========== */
+  .menu-section { background: var(--cream); }
+  .menu-header { text-align: center; margin-bottom: 60px; }
+  .menu-header .section-title { margin-bottom: 14px; }
+  .menu-header p { font-size: 16px; color: var(--text-soft); max-width: 500px; margin: 0 auto; }
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .menu-card {
+    background: white;
+    border: 1px solid rgba(45,90,27,0.12);
+    border-radius: 20px; padding: 28px 22px;
+    transition: all 0.3s;
+    cursor: default; position: relative; overflow: hidden;
+  }
+  .menu-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--green-mid);
+    transform: scaleX(0); transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .menu-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(45,90,27,0.1); }
+  .menu-card:hover::after { transform: scaleX(1); }
+  .menu-emoji {
+    font-size: 42px; margin-bottom: 16px; display: block;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+  .menu-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--text-dark); margin-bottom: 8px;
+  }
+  .menu-desc { font-size: 13px; color: var(--text-soft); line-height: 1.7; }
+  .menu-tag {
+    display: inline-block; margin-top: 14px;
+    background: var(--green-pale);
+    color: var(--green-mid);
+    font-size: 11px; font-weight: 600;
+    padding: 4px 12px; border-radius: 50px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ========== REVIEWS ========== */
+  .reviews { background: var(--green-dark); padding: 100px 60px; }
+  .reviews-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 60px;
+  }
+  .reviews-header .section-title { color: white; }
+  .reviews-header .section-tag { color: var(--gold-light); }
+  .overall-rating {
+    text-align: right;
+  }
+  .overall-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px; font-weight: 900;
+    color: var(--gold-light); line-height: 1;
+  }
+  .overall-stars { margin: 6px 0; }
+  .overall-count { font-size: 14px; color: rgba(255,255,255,0.5); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .review-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 28px;
+    transition: all 0.3s;
+  }
+  .review-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+  .review-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .reviewer-info { display: flex; align-items: center; gap: 12px; }
+  .reviewer-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; color: white;
+    flex-shrink: 0;
+  }
+  .reviewer-name { font-weight: 600; font-size: 15px; color: white; }
+  .reviewer-meta { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .review-stars { display: flex; gap: 3px; }
+  .review-text {
+    font-size: 14px; line-height: 1.75;
+    color: rgba(255,255,255,0.7);
+    font-style: italic;
+  }
+  .review-text::before { content: '"'; font-size: 20px; color: var(--gold); font-style: normal; }
+
+  /* ========== INFO ========== */
+  .info-section { background: var(--warm-white); }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .info-card {
+    background: white;
+    border: 1px solid rgba(45,90,27,0.1);
+    border-radius: 20px; padding: 36px;
+    margin-bottom: 20px;
+  }
+  .info-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(45,90,27,0.1);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hours-list { display: flex; flex-direction: column; gap: 4px; }
+  .hours-row {
+    display: flex; justify-content: space-between;
+    padding: 9px 12px; border-radius: 8px;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .hours-row:hover { background: var(--green-wash); }
+  .hours-row.today { background: var(--green-pale); color: var(--green-mid); font-weight: 600; border-radius: 10px; }
+  .address-block { font-size: 15px; line-height: 1.8; color: var(--text-mid); }
+  .address-block strong { color: var(--text-dark); }
+  .service-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .service-pill {
+    background: var(--green-pale);
+    border: 1px solid rgba(45,90,27,0.15);
+    color: var(--green-mid);
+    border-radius: 50px; padding: 8px 18px;
+    font-size: 13px; font-weight: 500;
+  }
+
+  /* Map placeholder */
+  .map-placeholder {
+    background: linear-gradient(135deg, var(--green-wash), var(--green-pale));
+    border: 1px solid rgba(45,90,27,0.15);
+    border-radius: 20px; height: 220px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; cursor: pointer;
+    transition: all 0.3s; text-decoration: none;
+    margin-top: 20px;
+  }
+  .map-placeholder:hover { background: var(--green-pale); transform: translateY(-2px); }
+  .map-icon { font-size: 40px; margin-bottom: 10px; }
+  .map-label { font-size: 15px; font-weight: 600; color: var(--green-mid); }
+  .map-sub { font-size: 12px; color: var(--text-soft); margin-top: 4px; }
+
+  /* ========== CTA ========== */
+  .cta { background: var(--cream); padding: 100px 60px; text-align: center; }
+  .cta-inner {
+    background: var(--green-dark);
+    border-radius: 32px; padding: 80px 60px;
+    max-width: 800px; margin: 0 auto;
+    position: relative; overflow: hidden;
+  }
+  .cta-glow {
+    position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,138,46,0.35), transparent 70%);
+  }
+  .cta-glow2 {
+    position: absolute; bottom: -60px; left: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,146,42,0.2), transparent 70%);
+  }
+  .cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700; color: white;
+    line-height: 1.2; margin-bottom: 16px;
+    position: relative;
+  }
+  .cta h2 em { font-style: italic; color: var(--gold-light); }
+  .cta p {
+    font-size: 16px; color: rgba(255,255,255,0.6);
+    max-width: 480px; margin: 0 auto 36px;
+    line-height: 1.75; position: relative;
+  }
+  .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: #0f2306;
+    padding: 50px 60px 30px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+  }
+  .footer-brand .nav-logo { color: white; font-size: 24px; display: block; margin-bottom: 10px; }
+  .footer-brand p { font-size: 13px; max-width: 240px; line-height: 1.7; }
+  .footer-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    max-width: 1200px; margin: 24px auto 0;
+    text-align: center; font-size: 13px;
+  }
+
+  /* ========== SCROLL ANIMATIONS ========== */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+  .fade-in-delay-4 { transition-delay: 0.4s; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    section { padding: 70px 30px; }
+    nav { padding: 18px 30px; }
+    nav.scrolled { padding: 12px 30px; }
+    .hero-content { grid-template-columns: 1fr; padding: 100px 30px 60px; gap: 40px; }
+    .hero-visual { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .reviews-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+    .overall-rating { text-align: left; }
+    .info-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .cta { padding: 60px 30px; }
+    .cta-inner { padding: 50px 30px; }
+    footer { padding: 40px 30px 24px; }
+  }
+  @media (max-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .hero-stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo">Warung Teh Ufu</div>
+  <ul class="nav-links">
+    <li><a href="#tentang">Tentang Kami</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#ulasan">Ulasan</a></li>
+    <li><a href="#info">Info</a></li>
+  </ul>
+  <a href="https://maps.google.com/?q=Warung+Teh+Ufu+Cicurug+Sukabumi" target="_blank" class="nav-cta">Petunjuk Arah</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-leaves"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">Bintang 4.7 di Google Maps</div>
+      <h1 class="hero-title">
+        Rasa <em>Rumahan</em><br>yang Selalu<br>Bikin Kangen
+      </h1>
+      <p class="hero-subtitle">
+        Warung makan legendaris di Cicurug, Sukabumi. Dari mie ayam kenyal hingga sate bumbu kacang spesial — setiap suapan terasa seperti masakan ibu sendiri.
+      </p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn-primary">Lihat Menu</a>
+        <a href="#info" class="btn-ghost">Info Lengkap</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">4.7</div>
+          <div class="hero-stat-label">Rating Google</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">18+</div>
+          <div class="hero-stat-label">Ulasan</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">05.30</div>
+          <div class="hero-stat-label">Buka Pagi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div style="position:relative">
+          <div class="open-badge">Buka Sekarang</div>
+        </div>
+        <div class="rating-big">4.7</div>
+        <div class="stars-row">
+          <span class="star">★</span><span class="star">★</span>
+          <span class="star">★</span><span class="star">★</span>
+          <span class="star" style="opacity:0.5">★</span>
+        </div>
+        <p class="rating-sub">18 ulasan di Google Maps</p>
+        <div class="review-pills">
+          <div class="review-pill">Bakso, mie ayam, dan mie rebusnya mantap pisan!</div>
+          <div class="review-pill">Masakan teh ufu mantul… harga murah meriah</div>
+          <div class="review-pill">Dijamin kagak bakal nyesel deh!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TENTANG -->
+<section class="about" id="tentang">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <span class="section-tag">Tentang Kami</span>
+        <h2 class="section-title">Warung Penuh<br><em>Cinta & Cita Rasa</em></h2>
+        <p class="about-desc">
+          Warung Teh Ufu hadir di jantung Cicurug, Kabupaten Sukabumi sebagai tempat makan yang hangat dan bersahaja. Kami menyajikan berbagai hidangan lezat — mulai dari sarapan pagi hingga makan malam — dengan bumbu rempah pilihan yang diolah penuh kasih setiap harinya.
+        </p>
+        <p class="about-desc">
+          Percaya bahwa makanan terbaik adalah yang dibuat dengan hati, kami terus berkomitmen menghadirkan cita rasa autentik Sunda yang bikin rindu.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon">🌿</div>
+            <div>
+              <div class="about-feature-title">Bahan Segar Pilihan</div>
+              <div class="about-feature-desc">Sayuran dan bahan-bahan dipilih segar setiap hari dari pasar lokal.</div>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">👩‍🍳</div>
+            <div>
+              <div class="about-feature-title">Resep Turun Temurun</div>
+              <div class="about-feature-desc">Bumbu dan cara masak diwariskan dengan penuh tradisi dan keotentikan.</div>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">💚</div>
+            <div>
+              <div class="about-feature-title">Harga Bersahabat</div>
+              <div class="about-feature-desc">Kualitas premium dengan harga yang ramah di kantong semua kalangan.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual fade-in fade-in-delay-2">
+        <div class="about-card-big">
+          <div class="about-card-bg"></div>
+          <div style="position:relative">
+            <div class="about-card-title">"Warung yang Bikin<br>Kamu Mau Balik Lagi"</div>
+            <div class="about-card-divider"></div>
+            <p class="about-card-body">
+              Lebih dari sekadar warung makan biasa, kami adalah tempat berkumpul keluarga, teman, dan tetangga yang ingin menikmati hidangan lezat dengan suasana yang akrab dan penuh kehangatan.
+            </p>
+            <div class="about-badges">
+              <span class="about-badge">✓ Makan di Tempat</span>
+              <span class="about-badge">✓ Bawa Pulang</span>
+              <span class="about-badge">✓ Buka Tiap Hari</span>
+              <span class="about-badge">✓ Halal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="menu-header fade-in">
+      <span class="section-tag">Menu Kami</span>
+      <h2 class="section-title">Menu <em>Andalan</em> Teh Ufu</h2>
+      <p>Setiap hidangan dimasak dengan penuh cinta dari bahan-bahan segar terpilih.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card fade-in fade-in-delay-1">
+        <span class="menu-emoji">🍜</span>
+        <div class="menu-name">Mie Ayam</div>
+        <p class="menu-desc">Mie kenyal dengan ayam berbumbu dan kuah kaldu yang gurih — favorit pelanggan setia kami.</p>
+        <span class="menu-tag">⭐ Terlaris</span>
+      </div>
+      <div class="menu-card fade-in fade-in-delay-2">
+        <span class="menu-emoji">🍡</span>
+        <div class="menu-name">Sate Ayam</div>
+        <p class="menu-desc">Sate ayam bakar sempurna dengan saus kacang homemade yang kaya rempah dan aroma.</p>
+        <span class="menu-tag">⭐ Andalan</span>
+      </div>
+      <div class="menu-card fade-in fade-in-delay-3">
+        <span class="menu-emoji">🥗</span>
+        <div class="menu-name">Karedok Ngaruy</div>
+        <p class="menu-desc">Sayuran segar mentah dengan bumbu kacang pedas manis khas Sunda yang otentik dan menyegarkan.</p>
+        <span class="menu-tag">✦ Khas Sunda</span>
+      </div>
+      <div class="menu-card fade-in fade-in-delay-1">
+        <span class="menu-emoji">🍲</span>
+        <div class="menu-name">Bakso Sapi</div>
+        <p class="menu-desc">Bakso sapi kenyal dengan kuah kaldu bening yang kaya rasa, cocok disantap kapan saja.</p>
+        <span class="menu-tag">💛 Favorit</span>
+      </div>
+      <div class="menu-card fade-in fade-in-delay-2">
+        <span class="menu-emoji">🍝</span>
+        <div class="menu-name">Mie Rebus</div>
+        <p class="menu-desc">Mie rebus hangat dengan kuah bumbu spesial dan aneka topping pilihan yang bikin nagih.</p>
+        <span class="menu-tag">✦ Pilihan</span>
+      </div>
+      <div class="menu-card fade-in fade-in-delay-3">
+        <span class="menu-emoji">🥬</span>
+        <div class="menu-name">Sayuran Segar</div>
+        <p class="menu-desc">Beragam sayuran segar pilihan untuk melengkapi hidangan utama Anda setiap hari.</p>
+        <span class="menu-tag">🌿 Segar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="ulasan">
+  <div class="container">
+    <div class="reviews-header fade-in">
+      <div>
+        <span class="section-tag">Ulasan Pelanggan</span>
+        <h2 class="section-title" style="color:white">Apa Kata <em style="color:var(--gold-light)">Mereka?</em></h2>
+      </div>
+      <div class="overall-rating">
+        <div class="overall-num">4.7</div>
+        <div class="overall-stars">
+          <span style="color:var(--gold-light);font-size:18px">★★★★</span><span style="color:rgba(255,255,255,0.3);font-size:18px">★</span>
+        </div>
+        <div class="overall-count">Berdasarkan 18 ulasan Google</div>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card fade-in fade-in-delay-1">
+        <div class="review-top">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar" style="background:#e67e22">M</div>
+            <div>
+              <div class="reviewer-name">Muhammad Riskanjaya</div>
+              <div class="reviewer-meta">7 ulasan · 4 tahun lalu</div>
+            </div>
+          </div>
+          <div class="review-stars">
+            <span style="color:var(--gold-light)">★★★★</span><span style="color:rgba(255,255,255,0.2)">★</span>
+          </div>
+        </div>
+        <p class="review-text">Warung kelontong berikut sayuran untuk kebutuhan sehari-hari, ada juga jualan bakso, mie ayam, dan sate. Kayaknya segala rupa di jual! Kalau laku lanjuttt… soal rasa bolehlah.</p>
+      </div>
+      <div class="review-card fade-in fade-in-delay-2">
+        <div class="review-top">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar" style="background:#27ae60">T</div>
+            <div>
+              <div class="reviewer-name">Titi Junaidy</div>
+              <div class="reviewer-meta">2 ulasan · 4 tahun lalu</div>
+            </div>
+          </div>
+          <div class="review-stars">
+            <span style="color:var(--gold-light)">★★★★★</span>
+          </div>
+        </div>
+        <p class="review-text">Masakan teh ufu mantul banget! Harga murah meriah, puas banget makan di sini. Recommended buat semua yang mau makan enak tanpa kantong bolong.</p>
+      </div>
+      <div class="review-card fade-in fade-in-delay-3">
+        <div class="review-top">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar" style="background:#2980b9">S</div>
+            <div>
+              <div class="reviewer-name">SAN LONG</div>
+              <div class="reviewer-meta" style="display:flex;align-items:center;gap:5px">
+                <span style="background:rgba(74,138,46,0.3);color:#7de87d;font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600">Local Guide</span>
+                <span>3 tahun lalu</span>
+              </div>
+            </div>
+          </div>
+          <div class="review-stars">
+            <span style="color:var(--gold-light)">★★★★★</span>
+          </div>
+        </div>
+        <p class="review-text">Untuk kawan-kawan yang sedang mencari tempat makan, cocok banget dah warung teh ufu. Dijamin kagak bakal nyesel! Wajib banget mampir kalau lewat Cicurug.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section" id="info">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:50px">
+      <span class="section-tag">Informasi</span>
+      <h2 class="section-title">Temukan <em>Kami</em></h2>
+    </div>
+    <div class="info-grid">
+      <div class="fade-in">
+        <div class="info-card">
+          <div class="info-card-title">🕐 Jam Operasional</div>
+          <div class="hours-list">
+            <div class="hours-row"><span>Senin</span><span>05.30 – 20.30</span></div>
+            <div class="hours-row"><span>Selasa</span><span>05.30 – 20.30</span></div>
+            <div class="hours-row"><span>Rabu</span><span>05.30 – 20.30</span></div>
+            <div class="hours-row"><span>Kamis</span><span>05.30 – 20.30</span></div>
+            <div class="hours-row"><span>Jum'at</span><span>05.30 – 20.30</span></div>
+            <div class="hours-row"><span>Sabtu</span><span>05.30 – 21.00</span></div>
+            <div class="hours-row today"><span>Minggu ← Hari Ini</span><span>06.00 – 20.00</span></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🍽️ Layanan</div>
+          <div class="service-pills">
+            <span class="service-pill">🪑 Makan di Tempat</span>
+            <span class="service-pill">🛍️ Bawa Pulang</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in fade-in-delay-2">
+        <div class="info-card">
+          <div class="info-card-title">📍 Lokasi</div>
+          <div class="address-block">
+            <strong>Jl. Purwasari – Nangerang</strong><br>
+            Nanggerang, Kec. Cicurug<br>
+            Kabupaten Sukabumi<br>
+            Jawa Barat 43359<br><br>
+            <span style="color:var(--text-soft);font-size:13px">Plus Code: 6RC7+CP Nanggerang</span>
+          </div>
+        </div>
+        <a href="https://maps.google.com/?q=Warung+Teh+Ufu+Cicurug+Sukabumi" target="_blank" class="map-placeholder">
+          <div class="map-icon">🗺️</div>
+          <div class="map-label">Lihat di Google Maps</div>
+          <div class="map-sub">Klik untuk petunjuk arah</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <div class="cta-glow"></div>
+    <div class="cta-glow2"></div>
+    <h2>Sudah Lapar? <em>Yuk Mampir!</em></h2>
+    <p>Buka setiap hari mulai pukul 05.30 pagi. Kami siap menyambut Anda dengan hidangan hangat dan senyum ramah.</p>
+    <div class="cta-actions">
+      <a href="https://maps.google.com/?q=Warung+Teh+Ufu+Cicurug+Sukabumi" target="_blank" class="btn-primary">🗺️ Petunjuk Arah</a>
+      <a href="#menu" class="btn-ghost">Lihat Menu Lengkap</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Warung Teh Ufu</span>
+      <p>Warung makan sederhana dengan cita rasa yang selalu bikin kangen. Hadir di Cicurug sejak bertahun-tahun lalu.</p>
+    </div>
+    <div>
+      <p style="font-size:13px;margin-bottom:12px;color:rgba(255,255,255,0.7);font-weight:500">Menu Andalan</p>
+      <div class="footer-links">
+        <a href="#menu">Mie Ayam</a>
+        <a href="#menu">Sate Ayam</a>
+        <a href="#menu">Karedok Ngaruy</a>
+        <a href="#menu">Bakso Sapi</a>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:13px;margin-bottom:12px;color:rgba(255,255,255,0.7);font-weight:500">Informasi</p>
+      <div class="footer-links">
+        <a href="#tentang">Tentang Kami</a>
+        <a href="#info">Jam Buka</a>
+        <a href="#info">Lokasi</a>
+        <a href="#ulasan">Ulasan</a>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:13px;margin-bottom:12px;color:rgba(255,255,255,0.7);font-weight:500">Kontak</p>
+      <div class="footer-links">
+        <a href="https://maps.google.com/?q=Warung+Teh+Ufu+Cicurug+Sukabumi" target="_blank">📍 Google Maps</a>
+        <a href="#home">📞 Hubungi Kami</a>
+      </div>
+      <div style="margin-top:16px;font-size:12px;line-height:1.7">
+        Jl. Purwasari – Nangerang<br>
+        Cicurug, Kab. Sukabumi<br>
+        Jawa Barat 43359
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Warung Teh Ufu · Cicurug, Sukabumi · Semua hak dilindungi</p>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll animations
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  faders.forEach(el => observer.observe(el));
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href.length > 1) {
+        const target = document.querySelector(href);
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      }
+    });
+  });
+</script>
+</body>
+</html>
